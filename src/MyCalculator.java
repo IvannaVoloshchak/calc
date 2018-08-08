@@ -6,46 +6,53 @@ public class MyCalculator {
         double number1;
         String operation;
         double result = 0;
-        double memoryNum;
+        double memoryNum=0;
 
         do {
             Scanner scanner = new Scanner(System.in);
-            number1 = Double.parseDouble(getNumber(scanner));
             operation = getOperation(scanner);
-            double number2 = Double.parseDouble(getNumber(scanner));
 
             switch (operation) {
                 case "+":
-                    result = add(number1, number2);
+                   result= add();
                     break;
                 case "-":
-                    result = subtract(number1, number2);
+                    result = subtract();
                     break;
                 case "*":
-                    result = multiply(number1, number2);
+                    result = multiply();
                     break;
                 case "/":
-                    result = divide(number1, number2);
+                    result = divide();
                     break;
-//                case"m":
-//                    double memoryPoint = getMemory(result);
-//                    break;
-//                case "m-":
-//                    memoryMinus(number,result);
-//                    break;
-//                case "m+":
-//
-//                    memoryPlus(result, number);
-//                    break;
+                case"m":
+                  memoryNum= getMemory(result);
+                    break;
+                case "m+":
+                   result= memoryPlus(memoryNum);
+                    break;
+                case"m-":
+                   result= memorySubtract(memoryNum);
+                    break;
+                case "mc":
+                   result= setMemory(memoryNum);// work not so as I aspect
+                    break;
+               case "s-":
+                    result = sameMinus(result);
+                    break;
+                case "s+":
+                 result =   samePlus(result);
+                    break;
                 default:
                     System.out.println("Error");
                     break;
             }
-            printOperation(number1, operation, number2, result);
+            printOperation( result);
         } while (true);
     }
 
-    static String getNumber(Scanner scanner) {
+    static String getNumber() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter  number:");
         String number = scanner.next();
         if (number.equalsIgnoreCase("q")) {
@@ -53,7 +60,14 @@ public class MyCalculator {
         }
         return number;
     }
-
+    static double number1(){
+        double number1 = Double.parseDouble(getNumber());
+                return  number1;
+    }
+    static double number2() {
+        double number2 = Double.parseDouble(getNumber());
+        return number2;
+    }
     static String getOperation(Scanner scanner) {
         System.out.println("Choose operation:");
         String operations = scanner.next();
@@ -62,46 +76,52 @@ public class MyCalculator {
         }
         return operations;
     }
+    static double add(){
+        return  number1() + number2();
 
-    static double add(double number1, double number2) {
-        return number1 + number2;
     }
 
-    static double subtract(double number1, double number2) {
-        return number1 - number2;
+    static double subtract(){
+        return number1()-number2();
     }
 
-    static double multiply(double number1, double number2) {
-        return number1 * number2;
+    static double multiply() {
+        return   number1()*number2();
     }
 
-    static double divide(double number1, double number2) {
-        if (number2 == 0) {
+    static double divide() {
+        if (number2() == 0) {
             System.out.println("Sorry, you cant divide by 0");
         }
-        return number1 / number2;
+        return number1()/number2();
     }
 
-    static void printOperation(double number1, String operation, double number2, double result) {
-        System.out.println("The current value is " + number1 + operation + number2 + " = " + result);
+    static void printOperation( double result) {
+        System.out.println("The current value is  = " + result);
     }
 
     static double getMemory(double result) {
         double memoryNum = result;
-        System.out.println(memoryNum);
+        return memoryNum;
+        }
+        static double memoryPlus(double memoryNum){
+            return number1()+memoryNum;
+        }
+    static double memorySubtract(double memoryNum){
+        return  number1()-getMemory(memoryNum);
+    }
+    static double setMemory(double memoryNum){ //помилка все одно пам'ятає те число яке пішло в пам'ять
+        getMemory(memoryNum);
+        memoryNum=0.0;
         return memoryNum;
     }
 
-    static double memoryMinus(double number, double result) {
-        result = number - getMemory(result);
-        System.out.println(result);
-        return result;
+    static double sameMinus(double result) {
+           return  number1() - result;
     }
 
-    static double memoryPlus(double result, double number) {
-        result = number + getMemory(result);
-        System.out.println(result);
-        return result;
+    static double samePlus(double result) {
+            return  number1() + result;
     }
 
     static void showMenu() {
@@ -109,7 +129,13 @@ public class MyCalculator {
                 "\n + enter to add numbers;" +
                 "\n - enter to subtract;" +
                 "\n * enter to multiply;" +
-                "\n / enter to divide" +
+                "\n / enter to divide;" +
+                "\n m if u want to work with current result in the future and put it in memory;"+
+                "\n m+ if u want to add number to memory value "+
+                "\n m- if u want to subtract number to memory value "+
+                "\n mc if u want to clear memory"+
+                "\n s+ if u want to add some other num to current value;"+
+                "\n s- if you want to subtract other number from current value;"+
                 "\n q pres it if you want leave leave the program");
     }
 }
