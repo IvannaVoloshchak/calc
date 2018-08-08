@@ -82,7 +82,6 @@ public class MyCalculator {
         return number1() + number2();
 
     }
-
     static double subtract() {
         return number1() - number2();
     }
